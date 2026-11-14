@@ -1,5 +1,5 @@
 import { getUserFromRequest, serverClient } from '@/lib/supabaseServer'
-import { counselorReply } from '@/lib/counselor'
+import { counselorReply, fallbackReply } from '@/lib/counselor'
 
 export const dynamic = 'force-dynamic'
 
@@ -29,10 +29,11 @@ export async function POST(request) {
     return Response.json({ reply })
   } catch (error) {
     console.error('Counselor error:', error.message)
-    const notConfigured = error.message.includes('GEMINI_API_KEY')
-    return Response.json(
-      { error: notConfigured ? 'The AI counselor is not set up on this server yet.' : 'The AI counselor is busy right now. Please try again in a moment.' },
-      { status: notConfigured ? 503 : 502 }
-    )
+    // A rejected key or missing key is a setup problem: tell the developer clearly.
+    if (error.message.includes('GEMINI_API_KEY') || error.message.includes('key was rejected')) {
+      return Response.json({ error: 'The AI counselor is not set up correctly on this server (check the Gemini API key).' }, { status: 503 })
+    }
+    // Otherwise (busy, timeout, no network) still give the student a basic answer.
+    return Response.json({ reply: fallbackReply(message, profile), fallback: true })
   }
 }
