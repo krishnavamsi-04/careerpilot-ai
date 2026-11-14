@@ -1,76 +1,80 @@
 # CareerPilot AI
 
-CareerPilot AI is a polished frontend-only prototype for helping students explore careers, colleges, skills, and learning roadmaps.
+CareerPilot AI helps students explore careers and colleges, follow a learning roadmap, and chat with an AI career counselor.
 
-## Important scope note
+The UI prototype was generated with Emergent. This repository adds a real backend and database:
+Supabase Auth and PostgreSQL, plus server-side API routes.
 
-This exported version is the current prototype. It intentionally does **not** include a backend, Supabase, MongoDB, Gemini, external APIs, authentication services, or database tables. Demo authentication, onboarding, saved colleges, comparison, counselor responses, roadmap progress, and profile edits use React state and browser `localStorage`.
+## Architecture
 
-The project contains no real student data and no verified college statistics. College content is clearly labeled prototype data.
+```
+Browser (Next.js app)  ->  API routes (server)  ->  Supabase (Auth + PostgreSQL)
+```
 
-## Run locally
+- **Frontend:** Next.js 15, React, Tailwind CSS
+- **Backend:** Next.js Route Handlers in `app/api/` (they run on the server)
+- **Database and auth:** Supabase (PostgreSQL) with Row Level Security, so each student can only read and edit their own rows
 
-Requirements:
+## API routes
 
-- Node.js 18 or newer
-- Yarn 1.x
+| Method | Route | Login needed | What it does |
+|---|---|---|---|
+| GET | `/api/health` | No | Checks that the server and database are reachable |
+| GET | `/api/colleges?q=&state=&type=` | No | Returns colleges, with optional search and filters |
+| POST | `/api/counselor` | Yes (Bearer token) | Verifies the user, reads their profile, returns a counselor reply |
 
-Install and start the development server:
+## Database tables
 
-```bash
+| Table | Purpose |
+|---|---|
+| `colleges` | Public reference data (10 prototype colleges) |
+| `profiles` | One row per student, created automatically on signup by a trigger |
+| `saved_colleges` | Which student saved which college |
+| `roadmap_progress` | Status of each roadmap phase per student |
+| `counselor_chats` | Chat history per student (JSON) |
+
+The full schema, security rules and seed data are in `database/schema.sql`.
+
+## Run it locally
+
+Requirements: Node.js 18 or newer, Yarn 1.x
+
+1. Create a free project at supabase.com.
+2. In Supabase, open **SQL Editor** and run `database/schema.sql` once.
+3. In Supabase, open **Authentication** settings and turn off "Confirm email" for demos.
+4. Copy `.env.example` to `.env.local` and fill in the Project URL and the anon / publishable key
+   (Project Settings -> API). Never use the service_role key.
+5. Install and start:
+
+```
 yarn install
-yarn dev
+yarn dev:webpack
 ```
 
-Then open the local URL shown by Next.js. The app uses the existing Next.js scripts in `package.json`.
+(`yarn dev` also works on Mac, Linux and Git Bash. On Windows PowerShell use `yarn dev:webpack`.)
 
-Create a production build with:
-
-```bash
-yarn build
-yarn start
-```
-
-## Main product flows
-
-- Landing page
-- Demo login and signup
-- Five-step onboarding
-- Personalized dashboard
-- College search and filters
-- College details
-- Saved colleges
-- Comparison of up to three colleges
-- AI counselor demo conversation
-- Career roadmap milestones
-- Editable student profile
+Open http://localhost:3000. Check http://localhost:3000/api/health: it should say `ok`.
 
 ## Where to edit
 
-- `app/page.js` and route page files: route entry points
-- `components/careerpilot-app.js`: main UI, navigation, state, and prototype flows
-- `data/mockData.js`: prototype colleges, careers, roadmap phases, and onboarding options
-- `app/globals.css`: global Tailwind styles
-- `package.json`: scripts and dependencies
-- `tailwind.config.js`: Tailwind configuration
+- `components/careerpilot-app.js`: main UI, navigation and data loading/saving
+- `app/api/`: backend routes
+- `lib/supabase.js`: browser Supabase client
+- `lib/supabaseServer.js`: server-side Supabase helper and token check
+- `lib/counselor.js`: counselor reply logic
+- `data/mockData.js`: prototype careers, roadmap phases and onboarding options
+- `database/schema.sql`: tables, security rules, trigger and seed data
 
-## Database setup for a future backend connection
+## Current limits and next steps
 
-There is no database setup required for this prototype. To connect a friend's own backend later:
+- College data is **prototype data**, not verified. Next step: import verified data from an official source.
+- The counselor reply is rule-based. Next step: call Gemini from `app/api/counselor/route.js`
+  with a server-only `GEMINI_API_KEY`.
+- The compare list is kept in the browser on purpose (it is only a temporary selection).
+- Not built yet: password reset, Google sign-in, automated tests.
 
-1. Choose a database provider and create a separate project.
-2. Design tables for profiles, academic profiles, interests, skills, career goals, colleges, saved colleges, comparisons, conversations, messages, recommendations, roadmaps, and assessments.
-3. Add row-level access rules so each student can read and edit only their own private records.
-4. Replace the `localStorage` helpers and mock data service boundaries in `components/careerpilot-app.js` with server-side service calls.
-5. Keep API credentials in server-side environment variables only. Never place service-role keys or Gemini keys in browser-exposed variables.
-6. Add a separate `.env.local` based on `.env.example` for the friend's own local setup.
+## Security
 
-This export does not create or modify any database schema, and it does not contain any database credentials.
-
-## Future AI counselor setup
-
-The current counselor is explicitly a prototype response experience. For a production version, call Gemini only from a secure backend or Edge Function, store `GEMINI_API_KEY` as a server-side secret, authenticate requests, and persist conversations through the chosen database with row-level access control.
-
-## Export safety
-
-Secrets and runtime artifacts were intentionally excluded from this archive, including `.env`, `node_modules`, `.next`, and generated build output.
+- Keys live in `.env.local`, which is ignored by Git.
+- Only the public anon key is used in this project.
+- Row Level Security is enabled on every table.
