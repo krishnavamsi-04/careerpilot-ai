@@ -2,6 +2,7 @@ import { getUserFromRequest, serverClient } from '@/lib/supabaseServer'
 import { counselorReply, fallbackReply } from '@/lib/counselor'
 
 export const dynamic = 'force-dynamic'
+export const maxDuration = 60 // seconds: lets the server wait for Gemini on Vercel
 
 // POST /api/counselor
 // body: { "message": "...", "history": [{ "role": "user" | "assistant", "text": "..." }] }
