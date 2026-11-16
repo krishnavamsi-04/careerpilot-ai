@@ -1,0 +1,22 @@
+
+college_id,college_name,state,city,college_type,courses,annual_fees,nirf_rank,placement_average,placement_highest,accreditation,facilities
+1,Demo Engineering College 01,Andhra Pradesh,Vijayawada,Private,Computer Science; Artificial Intelligence; Data Science,125000,45,5.2,18.0,NBA,Computer labs; Library; Hostel
+2,Demo Engineering College 02,Andhra Pradesh,Guntur,Private,Computer Science; Electronics; Data Science,95000,72,4.1,12.0,NAAC A,Library; Transport; Labs
+3,Demo Engineering College 03,Andhra Pradesh,Visakhapatnam,Government,Computer Science; Electronics; Mechanical,65000,28,6.0,20.0,NBA,Research labs; Library; Hostel
+4,Demo Engineering College 04,Andhra Pradesh,Tirupati,Private,Artificial Intelligence; Data Science; Computer Science,140000,88,4.8,15.0,NAAC A+,AI lab; Library; Hostel
+5,Demo Engineering College 05,Telangana,Hyderabad,Private,Computer Science; Artificial Intelligence; Cyber Security,160000,34,6.5,24.0,NBA,Incubation centre; Labs; Hostel
+6,Demo Engineering College 06,Telangana,Warangal,Government,Computer Science; Electronics; Electrical,70000,12,7.2,28.0,NAAC A++,Research labs; Library; Hostel
+7,Demo Engineering College 07,Telangana,Karimnagar,Private,Computer Science; Data Science; Information Technology,110000,95,4.4,13.0,NAAC A,Labs; Transport; Library
+8,Demo Engineering College 08,Karnataka,Bengaluru,Private,Computer Science; Artificial Intelligence; Information Technology,190000,22,8.0,32.0,NBA,Innovation centre; Labs; Hostel
+9,Demo Engineering College 09,Karnataka,Mysuru,Private,Electronics; Computer Science; Mechanical,135000,61,5.1,16.0,NAAC A+,Library; Labs; Sports
+10,Demo Engineering College 10,Tamil Nadu,Chennai,Private,Computer Science; Data Science; Electronics,175000,18,7.8,30.0,NBA,Research centre; Labs; Hostel
+11,Demo Engineering College 11,Tamil Nadu,Coimbatore,Government,Mechanical; Electrical; Computer Science,60000,31,5.9,19.0,NAAC A++,Workshop; Library; Hostel
+12,Demo Engineering College 12,Maharashtra,Pune,Private,Computer Science; Cyber Security; Data Science,180000,26,7.0,26.0,NBA,Innovation lab; Library; Hostel
+13,Demo Engineering College 13,Maharashtra,Nagpur,Government,Electronics; Computer Science; Civil,75000,54,5.0,15.0,NAAC A,Labs; Library; Sports
+14,Demo Engineering College 14,Delhi,New Delhi,Government,Computer Science; Electrical; Electronics,90000,8,9.0,35.0,NAAC A++,Research centre; Hostel; Library
+15,Demo Engineering College 15,Uttar Pradesh,Kanpur,Government,Computer Science; Mechanical; Aerospace,85000,6,10.0,40.0,NAAC A++,Research labs; Library; Hostel
+16,Demo Engineering College 16,West Bengal,Kolkata,Government,Computer Science; Electronics; Electrical,80000,14,7.5,27.0,NAAC A+,Labs; Library; Hostel
+17,Demo Engineering College 17,Kerala,Kochi,Private,Computer Science; Artificial Intelligence; Electronics,145000,79,5.4,17.0,NBA,AI lab; Library; Transport
+18,Demo Engineering College 18,Rajasthan,Jaipur,Private,Computer Science; Data Science; Civil,120000,83,4.7,14.0,NAAC A,Labs; Library; Hostel
+19,Demo Engineering College 19,Gujarat,Ahmedabad,Government,Computer Science; Electrical; Mechanical,68000,39,6.2,21.0,NAAC A+,Research labs; Library; Hostel
+20,Demo Engineering College 20,Odisha,Bhubaneswar,Private,Computer Science; Electronics; Data Science,130000,67,5.3,16.0,NBA,Labs; Incubation centre; Hostel
